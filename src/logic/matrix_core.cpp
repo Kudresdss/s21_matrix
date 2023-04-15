@@ -9,7 +9,7 @@ S21Matrix::S21Matrix(int rows, int cols) : rows_(rows), cols_(cols) {
 
 S21Matrix::S21Matrix(const S21Matrix& other) : rows_(other.rows_), cols_(other.cols_) {
     MatrixMemoryAllocation();
-    for (size_t i = 0; i < rows_; ++i) {
+    for (int i = 0; i < rows_; ++i) {
 		std::memcpy(matrix_[i], other.matrix_[i], cols_ * sizeof(double));
 	}
 }
@@ -25,13 +25,31 @@ S21Matrix::S21Matrix(S21Matrix&& other) {
 
 S21Matrix::~S21Matrix() {
     if (matrix_) {
-		for (size_t i = 0; i < rows_; ++i) {
+		for (int i = 0; i < rows_; ++i) {
 			delete matrix_[i];
 		}
         delete[] matrix_;
     }
 	rows_ = 0;
 	cols_ = 0;
+}
+
+void S21Matrix::MatrixMemoryAllocation() {
+	ValidateMatrixDimensions();
+	
+	matrix_ = new double*[rows_]();
+	for (int i = 0; i < rows_; ++i) {
+		matrix_[i] = new double[cols_]();
+	}
+}
+
+void S21Matrix::CopyMatrix(const S21Matrix& other) {
+	for (int i = 0; i < other.rows_ && i < rows_; ++i) {
+		if (other.cols_ < cols_)
+			std::memcpy(matrix_[i], other.matrix_[i], other.cols_ * sizeof(double));
+		else
+			std::memcpy(matrix_[i], other.matrix_[i], cols_ * sizeof(double));
+	}
 }
 
 void S21Matrix::SetRows(int rows) {
@@ -56,23 +74,6 @@ void S21Matrix::SetCols(int cols) {
 
 int S21Matrix::GetCols() {
 	return (cols_);
-}
-
-void S21Matrix::MatrixMemoryAllocation() {
-	ValidateMatrixDimensions();
-	matrix_ = new double*[rows_]();
-	for (size_t i = 0; i < rows_; ++i) {
-		matrix_[i] = new double[cols_]();
-	}
-}
-
-void S21Matrix::CopyMatrix(const S21Matrix& other) {
-	for (size_t i = 0; i < other.rows_ && i < rows_; ++i) {
-		if (other.cols_ < cols_)
-			std::memcpy(matrix_[i], other.matrix_[i], other.cols_ * sizeof(double));
-		else
-			std::memcpy(matrix_[i], other.matrix_[i], cols_ * sizeof(double));
-	}
 }
 
 void S21Matrix::ValidateMatrixDimensions() {

@@ -33,7 +33,7 @@ public:
 	S21Matrix InverseMatrix();
 	
 	S21Matrix CalcComplements();
-	void CalcSubMatrix(size_t i, size_t j, const S21Matrix& minor);
+	void CalcSubMatrix(int i, int j, const S21Matrix& minor);
 	double CalcDet();
 
     S21Matrix operator+(const S21Matrix& other);
@@ -44,11 +44,11 @@ public:
 	bool operator==(const S21Matrix& other);
     S21Matrix& operator=(const S21Matrix& other);		// assignment operator overload
 	S21Matrix& operator=(S21Matrix&& other);
-    S21Matrix& operator+=(const S21Matrix& other);                           
+    S21Matrix& operator+=(const S21Matrix& other);
     S21Matrix& operator-=(const S21Matrix& other);
 	S21Matrix& operator*=(const S21Matrix& other);
-    double operator()(int row, int col);				// index operator overload
-	
+	double& operator()(int row, int col);				// index operator overload
+
 private:
 	int rows_, cols_;
 	double **matrix_;
