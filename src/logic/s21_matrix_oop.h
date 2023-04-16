@@ -46,6 +46,7 @@ public:
 	S21Matrix& operator=(S21Matrix&& other);
     S21Matrix& operator+=(const S21Matrix& other);
     S21Matrix& operator-=(const S21Matrix& other);
+	S21Matrix& operator*=(const double num);
 	S21Matrix& operator*=(const S21Matrix& other);
 	double& operator()(int row, int col);				// index operator overload
 

@@ -1,5 +1,21 @@
 #include "s21_matrix_oop.h"
 
+// две перегрузки вне класса, объявленные дружественными
+S21Matrix operator*(const S21Matrix& matrix, const double num) {
+	S21Matrix res(matrix);
+
+	res.MulNumber(num);
+	return (res);
+}
+
+S21Matrix operator*(const double num, const S21Matrix& matrix) {
+	S21Matrix res(matrix);
+
+	res.MulNumber(num);
+	return (res);
+}
+//
+
 S21Matrix S21Matrix::operator+(const S21Matrix& other) {
 	S21Matrix res(*this);
 
@@ -20,22 +36,6 @@ S21Matrix S21Matrix::operator*(const S21Matrix& other) {
 	res.MulMatrix(other);
 	return (res);
 }
-
-// две перегрузки вне класса, объявленных дружественными
-S21Matrix operator*(const S21Matrix& matrix, const double num) {
-	S21Matrix res(matrix);
-
-	res.MulNumber(num);
-	return (res);
-}
-
-S21Matrix operator*(const double num, const S21Matrix& matrix) {
-	S21Matrix res(matrix);
-
-	res.MulNumber(num);
-	return (res);
-}
-//
 
 S21Matrix& S21Matrix::operator=(const S21Matrix& other) {
 	if (this != &other) {
@@ -69,6 +69,12 @@ S21Matrix& S21Matrix::operator+=(const S21Matrix& other) {
 S21Matrix& S21Matrix::operator-=(const S21Matrix& other) {
 	this->SubMatrix(other);
 	
+	return (*this);
+}
+
+S21Matrix& S21Matrix::operator*=(const double num) {
+	this->MulNumber(num);
+
 	return (*this);
 }
 

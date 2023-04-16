@@ -1,89 +1,89 @@
 #include "test_core.h"
 
 TEST(CONSTRUCTORS, DEFAULT_CONSTRUCTOR) {
-	S21Matrix matrix = S21Matrix();
+	S21Matrix matrix1 = S21Matrix();
 	
-	ASSERT_EQ(matrix.GetRows(), 1);
-	ASSERT_EQ(matrix.GetCols(), 1);
-	ASSERT_EQ(matrix(0, 0), 0);
+	ASSERT_EQ(matrix1.GetRows(), 1);
+	ASSERT_EQ(matrix1.GetCols(), 1);
+	ASSERT_EQ(matrix1(0, 0), 0);
 }
 
 TEST(CONSTRUCTORS, PARAMETERIZED_CONSTRUCTOR) {
-	double *test = new double[4]
+	double *test1 = new double[4]
 	{0, 0,
 	 0, 0};
 	
-	double **test_matrix = InitTestMatrix(test, 2, 2);
-	S21Matrix matrix = S21Matrix(2, 2);
+	double **test_matrix1 = InitTestMatrix(test1, 2, 2);
+	S21Matrix matrix1 = S21Matrix(2, 2);
 
-	ASSERT_EQ(matrix.GetRows(), 2);
-	ASSERT_EQ(matrix.GetCols(), 2);
-	ASSERT_EQ(EqMatrix(matrix, test_matrix, 2, 2), true);
+	ASSERT_EQ(matrix1.GetRows(), 2);
+	ASSERT_EQ(matrix1.GetCols(), 2);
+	ASSERT_EQ(EqMatrix(matrix1, test_matrix1, 2, 2), true);
 	
-	DeleteTestMatrix(test, test_matrix, 2);
+	DeleteTestMatrix(test1, test_matrix1, 2);
 }
 
 TEST(CONSTRUCTORS, COPY_CONSTRUCTOR) {
-	double *test = new double[4]
+	double *test1 = new double[4]
 	{2, 2,
 	 2, 2};
 
-	double **test_matrix = InitTestMatrix(test, 2, 2);
-	S21Matrix matrix = S21Matrix(2, 2);
-	InitS21Matrix(matrix, test, 2, 2);
-	S21Matrix copy_matrix = S21Matrix(matrix);
+	double **test_matrix1 = InitTestMatrix(test1, 2, 2);
+	S21Matrix matrix1 = S21Matrix(2, 2);
+	InitS21Matrix(matrix1, test_matrix1, 2, 2);
+	
+	S21Matrix copy_matrix1 = S21Matrix(matrix1);
+	ASSERT_EQ(EqMatrix(matrix1, test_matrix1, 2, 2), true);
+	ASSERT_EQ(EqMatrix(copy_matrix1, test_matrix1, 2, 2), true);
 
-	ASSERT_EQ(EqMatrix(matrix, test_matrix, 2, 2), true);
-	ASSERT_EQ(EqMatrix(copy_matrix, test_matrix, 2, 2), true);
-
-	DeleteTestMatrix(test, test_matrix, 2);
+	DeleteTestMatrix(test1, test_matrix1, 2);
 }
 
 TEST(CONSTRUCTORS, MOVE_CONSTRUCTOR) {
-	double *test = new double[4]
+	double *test1 = new double[4]
 	{2, 2,
 	 2, 2};
 
-	double **test_matrix = InitTestMatrix(test, 2, 2);
-	S21Matrix matrix = S21Matrix(2, 2);
-	InitS21Matrix(matrix, test, 2, 2);
-	S21Matrix copy_matrix = S21Matrix(std::move(matrix));
+	double **test_matrix1 = InitTestMatrix(test1, 2, 2);
+	S21Matrix matrix1 = S21Matrix(2, 2);
+	InitS21Matrix(matrix1, test_matrix1, 2, 2);
 
-	ASSERT_EQ(EqMatrix(copy_matrix, test_matrix, 2, 2), true);
-	ASSERT_THROW(matrix(0, 0), std::out_of_range);
+	S21Matrix copy_matrix1 = S21Matrix(std::move(matrix1));
+	ASSERT_EQ(EqMatrix(copy_matrix1, test_matrix1, 2, 2), true);
+	ASSERT_THROW(matrix1(0, 0), std::out_of_range);
 
-	DeleteTestMatrix(test, test_matrix, 2);
+	DeleteTestMatrix(test1, test_matrix1, 2);
 }
 
 TEST(DESTRUCTOR, STANDART_DESTRUCTOR) {
-	double *test = new double[4]
+	double *test1 = new double[4]
 	{2, 2,
 	 2, 2};
 
-	double **test_matrix = InitTestMatrix(test, 2, 2);
-	S21Matrix matrix = S21Matrix(2, 2);
-	InitS21Matrix(matrix, test, 2, 2);
-	matrix.~S21Matrix();
+	double **test_matrix1 = InitTestMatrix(test1, 2, 2);
+	S21Matrix matrix1 = S21Matrix(2, 2);
+	InitS21Matrix(matrix1, test_matrix1, 2, 2);
+	
+	matrix1.~S21Matrix();
+	ASSERT_THROW(matrix1(0, 0), std::out_of_range);
+	ASSERT_EQ(matrix1.GetRows(), 0);
+	ASSERT_EQ(matrix1.GetCols(), 0);
 
-	ASSERT_THROW(matrix(0, 0), std::out_of_range);
-	ASSERT_EQ(matrix.GetRows(), 0);
-	ASSERT_EQ(matrix.GetCols(), 0);
-
-	DeleteTestMatrix(test, test_matrix, 2);
+	DeleteTestMatrix(test1, test_matrix1, 2);
 }
 
 TEST(ACCESSORS_AND_MUTATORS, ACCESSORS) {
-	S21Matrix matrix = S21Matrix(2, 2);
+	S21Matrix matrix1 = S21Matrix(2, 2);
 
-	ASSERT_EQ(matrix.GetRows(), 2);
-	ASSERT_EQ(matrix.GetCols(), 2);
+	ASSERT_EQ(matrix1.GetRows(), 2);
+	ASSERT_EQ(matrix1.GetCols(), 2);
 }
 
 TEST(ACCESSORS_AND_MUTATORS, MUTATORS) {
-	S21Matrix matrix = S21Matrix(2, 2);
+	S21Matrix matrix1 = S21Matrix(2, 2);
 
-	ASSERT_NO_THROW(matrix.SetRows(3));
-	ASSERT_NO_THROW(matrix.SetCols(3));
-	ASSERT_EQ(matrix(1, 2), 0);
-	ASSERT_EQ(matrix(2, 1), 0);
+	ASSERT_NO_THROW(matrix1.SetRows(3));
+	ASSERT_NO_THROW(matrix1.SetCols(3));
+	ASSERT_EQ(matrix1(1, 2), 0);
+	ASSERT_EQ(matrix1(2, 1), 0);
 }

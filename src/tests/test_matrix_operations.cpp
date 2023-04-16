@@ -1,19 +1,19 @@
 #include "test_core.h"
 
 TEST(EQ_MATRIX, TRUE_ARE_EQUAL) {
-	double *test = new double[4]
+	double *test1 = new double[4]
 	{2, 2,
 	 2, 2};
 
-	double **test_matrix = InitTestMatrix(test, 2, 2);
+	double **test_matrix1 = InitTestMatrix(test1, 2, 2);
 	S21Matrix matrix1 = S21Matrix(2, 2);
 	S21Matrix matrix2 = S21Matrix(2, 2);
- 	InitS21Matrix(matrix1, test, 2, 2);
-	InitS21Matrix(matrix2, test, 2, 2);
+ 	InitS21Matrix(matrix1, test_matrix1, 2, 2);
+	InitS21Matrix(matrix2, test_matrix1, 2, 2);
 
 	ASSERT_EQ(matrix1.EqMatrix(matrix2), true);
 
-	DeleteTestMatrix(test, test_matrix, 2);
+	DeleteTestMatrix(test1, test_matrix1, 2);
 }
 
 TEST(EQ_MATRIX, FALSE_DIFFERENT_MATRIX_DIMENSIONS) {
@@ -28,8 +28,8 @@ TEST(EQ_MATRIX, FALSE_DIFFERENT_MATRIX_DIMENSIONS) {
 	double **test_matrix2 = InitTestMatrix(test2, 2, 2);
 	S21Matrix matrix1 = S21Matrix(1, 1);
 	S21Matrix matrix2 = S21Matrix(2, 2);
-	InitS21Matrix(matrix1, test1, 1, 1);
-	InitS21Matrix(matrix2, test2, 2, 2);
+	InitS21Matrix(matrix1, test_matrix1, 1, 1);
+	InitS21Matrix(matrix2, test_matrix2, 2, 2);
 
 	ASSERT_EQ(matrix1.EqMatrix(matrix2), false);
 
@@ -50,8 +50,8 @@ TEST(EQ_MATRIX, FALSE_NOT_EQUAL_VALUES) {
 	double **test_matrix2 = InitTestMatrix(test2, 2, 2);
 	S21Matrix matrix1 = S21Matrix(2, 2);
 	S21Matrix matrix2 = S21Matrix(2, 2);
-	InitS21Matrix(matrix1, test1, 2, 2);
-	InitS21Matrix(matrix2, test2, 2, 2);
+	InitS21Matrix(matrix1, test_matrix1, 2, 2);
+	InitS21Matrix(matrix2, test_matrix2, 2, 2);
 
 	ASSERT_EQ(matrix1.EqMatrix(matrix2), false);
 
@@ -77,8 +77,8 @@ TEST(SUM_MATRIX, CORRECT_INPUT) {
 	double **test_result = InitTestMatrix(result, 2, 2);
 	S21Matrix matrix1 = S21Matrix(2, 2);
 	S21Matrix matrix2 = S21Matrix(2, 2);
-	InitS21Matrix(matrix1, test1, 2, 2);
-	InitS21Matrix(matrix2, test2, 2, 2);
+	InitS21Matrix(matrix1, test_matrix1, 2, 2);
+	InitS21Matrix(matrix2, test_matrix2, 2, 2);
 
 	matrix1.SumMatrix(matrix2);
 	ASSERT_EQ(EqMatrix(matrix1, test_result, 2, 2), true);
@@ -100,8 +100,8 @@ TEST(SUM_MATRIX, INCORRECT_INPUT_DIFFERENT_MATRIX_DIMENSIONS) {
 	double **test_matrix2 = InitTestMatrix(test2, 2, 2);
 	S21Matrix matrix1 = S21Matrix(1, 1);
 	S21Matrix matrix2 = S21Matrix(2, 2);
-	InitS21Matrix(matrix1, test1, 1, 1);
-	InitS21Matrix(matrix2, test2, 2, 2);
+	InitS21Matrix(matrix1, test_matrix1, 1, 1);
+	InitS21Matrix(matrix2, test_matrix2, 2, 2);
 
 	ASSERT_THROW(matrix1.SumMatrix(matrix2), std::out_of_range);
 
@@ -127,8 +127,8 @@ TEST(SUB_MATRIX, CORRECT_INPUT) {
 	double **test_result = InitTestMatrix(result, 2, 2);
 	S21Matrix matrix1 = S21Matrix(2, 2);
 	S21Matrix matrix2 = S21Matrix(2, 2);
-	InitS21Matrix(matrix1, test1, 2, 2);
-	InitS21Matrix(matrix2, test2, 2, 2);
+	InitS21Matrix(matrix1, test_matrix1, 2, 2);
+	InitS21Matrix(matrix2, test_matrix2, 2, 2);
 
 	matrix1.SubMatrix(matrix2);
 	ASSERT_EQ(EqMatrix(matrix1, test_result, 2, 2), true);
@@ -150,8 +150,8 @@ TEST(SUB_MATRIX, INCORRECT_INPUT_DIFFERENT_MATRIX_DIMENSIONS) {
 	double **test_matrix2 = InitTestMatrix(test2, 2, 2);
 	S21Matrix matrix1 = S21Matrix(1, 1);
 	S21Matrix matrix2 = S21Matrix(2, 2);
-	InitS21Matrix(matrix1, test1, 1, 1);
-	InitS21Matrix(matrix2, test2, 2, 2);
+	InitS21Matrix(matrix1, test_matrix1, 1, 1);
+	InitS21Matrix(matrix2, test_matrix2, 2, 2);
 
 	ASSERT_THROW(matrix1.SubMatrix(matrix2), std::out_of_range);
 
@@ -171,7 +171,7 @@ TEST(MUL_NUMBER, CORRECT_MULTIPLICATION_BY_NUMBER) {
 	double **test_matrix1 = InitTestMatrix(test1, 2, 2);
 	double **test_result = InitTestMatrix(result, 2, 2);
 	S21Matrix matrix1 = S21Matrix(2, 2);
-	InitS21Matrix(matrix1, test1, 2, 2);
+	InitS21Matrix(matrix1, test_matrix1, 2, 2);
 
 	matrix1.MulNumber(4);
 
@@ -199,8 +199,8 @@ TEST(MUL_MATRIX, CORRECT_INPUT_SAME_DIMENSIONS) {
 	double **test_result = InitTestMatrix(result, 2, 2);
 	S21Matrix matrix1 = S21Matrix(2, 2);
 	S21Matrix matrix2 = S21Matrix(2, 2);
-	InitS21Matrix(matrix1, test1, 2, 2);
-	InitS21Matrix(matrix2, test2, 2, 2);
+	InitS21Matrix(matrix1, test_matrix1, 2, 2);
+	InitS21Matrix(matrix2, test_matrix2, 2, 2);
 
 	matrix1.MulMatrix(matrix2);
 	ASSERT_EQ(EqMatrix(matrix1, test_result, 2, 2), true);
@@ -231,10 +231,10 @@ TEST(MUL_MATRIX, CORRECT_INPUT_DIFFERENT_DIMENSIONS) {
 	double **test_result = InitTestMatrix(result, 3, 5);
 	S21Matrix matrix1 = S21Matrix(3, 3);
 	S21Matrix matrix2 = S21Matrix(3, 5);
-	InitS21Matrix(matrix1, test1, 3, 3);
-	InitS21Matrix(matrix2, test2, 3, 5);
+	InitS21Matrix(matrix1, test_matrix1, 3, 3);
+	InitS21Matrix(matrix2, test_matrix2, 3, 5);
 
-	matrix1.MulMatrix(matrix2);
+	ASSERT_NO_THROW(matrix1.MulMatrix(matrix2));
 	ASSERT_EQ(EqMatrix(matrix1, test_result, 3, 5), true);
 
 	DeleteTestMatrix(test1, test_matrix1, 3);
@@ -254,8 +254,8 @@ TEST(MUL_MATRIX, INCORRECT_INPUT_NOT_VALID_MATRIX_DIMENSIONS_FOR_MULTIPLICATION)
 	double **test_matrix2 = InitTestMatrix(test2, 2, 2);
 	S21Matrix matrix1 = S21Matrix(1, 1);
 	S21Matrix matrix2 = S21Matrix(2, 2);
-	InitS21Matrix(matrix1, test1, 1, 1);
-	InitS21Matrix(matrix2, test2, 2, 2);
+	InitS21Matrix(matrix1, test_matrix1, 1, 1);
+	InitS21Matrix(matrix2, test_matrix2, 2, 2);
 
 	ASSERT_THROW(matrix1.MulMatrix(matrix2), std::out_of_range);
 
@@ -263,7 +263,7 @@ TEST(MUL_MATRIX, INCORRECT_INPUT_NOT_VALID_MATRIX_DIMENSIONS_FOR_MULTIPLICATION)
 	DeleteTestMatrix(test2, test_matrix2, 2);
 }
 
-TEST(TRANSPOSE, CORRECT_TRANSPOSE) {
+TEST(TRANSPOSE, CORRECT_TRANSPOSE_SQUARE) {
 	double *test1 = new double[9]
 	{1, 2, 3,
 	 3, 2, 1,
@@ -277,13 +277,40 @@ TEST(TRANSPOSE, CORRECT_TRANSPOSE) {
 	double **test_matrix1 = InitTestMatrix(test1, 3, 3);
 	double **test_result = InitTestMatrix(result, 3, 3);
 	S21Matrix matrix1 = S21Matrix(3, 3);
-	InitS21Matrix(matrix1, test1, 3, 3);
+	InitS21Matrix(matrix1, test_matrix1, 3, 3);
 
 	matrix1 = matrix1.Transpose();
 	ASSERT_EQ(EqMatrix(matrix1, test_result, 3, 3), true);
 
 	DeleteTestMatrix(test1, test_matrix1, 3);
 	DeleteTestMatrix(result, test_result, 3);
+}
+
+TEST(TRANSPOSE, CORRECT_TRANSPOSE_NOT_SQUARE) {
+	double *test1 = new double[21]
+	{1, 2, 3, 4, 5, 6, 7,
+	 1, 2, 3, 4, 5, 6, 7,
+	 1, 2, 3, 4, 5, 6, 7};
+
+	double *result = new double[21]
+	{1, 1, 1,
+	 2, 2, 2,
+	 3, 3, 3,
+	 4, 4, 4,
+	 5, 5, 5,
+	 6, 6, 6,
+	 7, 7, 7};
+
+	double **test_matrix1 = InitTestMatrix(test1, 3, 7);
+	double **test_result = InitTestMatrix(result, 7, 3);
+	S21Matrix matrix1 = S21Matrix(3, 7);
+	InitS21Matrix(matrix1, test_matrix1, 3, 7);
+
+	matrix1 = matrix1.Transpose();
+	ASSERT_EQ(EqMatrix(matrix1, test_result, 7, 3), true);
+
+	DeleteTestMatrix(test1, test_matrix1, 3);
+	DeleteTestMatrix(result, test_result, 7);
 }
 
 TEST(DETERMINANT, CORRECT_INPUT) {
@@ -294,7 +321,7 @@ TEST(DETERMINANT, CORRECT_INPUT) {
 
 	double **test_matrix1 = InitTestMatrix(test1, 3, 3);
 	S21Matrix matrix1 = S21Matrix(3, 3);
-	InitS21Matrix(matrix1, test1, 3, 3);
+	InitS21Matrix(matrix1, test_matrix1, 3, 3);
 	
 	ASSERT_EQ(matrix1.Determinant(), -4);
 	
@@ -307,7 +334,7 @@ TEST(DETERMINANT, CORRECT_INPUT_ONE_ELEMENT_MATRIX) {
 
 	double **test_matrix1 = InitTestMatrix(test1, 1, 1);
 	S21Matrix matrix1 = S21Matrix(1, 1);
-	InitS21Matrix(matrix1, test1, 1, 1);
+	InitS21Matrix(matrix1, test_matrix1, 1, 1);
 	
 	ASSERT_EQ(matrix1.Determinant(), 9);
 	
@@ -321,7 +348,7 @@ TEST(DETERMINANT, INCORRECT_INPUT_MATRIX_IS_NOT_SQUARE) {
 	
 	double **test_matrix1 = InitTestMatrix(test1, 2, 3);
 	S21Matrix matrix1 = S21Matrix(2, 3);
-	InitS21Matrix(matrix1, test1, 2, 3);
+	InitS21Matrix(matrix1, test_matrix1, 2, 3);
 
 	ASSERT_THROW(matrix1.Determinant(), std::out_of_range);
 
@@ -342,7 +369,7 @@ TEST(CALC_COMPLEMENTS, CORRECT_INPUT) {
 	double **test_matrix1 = InitTestMatrix(test1, 3, 3);
 	double **test_result = InitTestMatrix(result, 3, 3);
 	S21Matrix matrix1 = S21Matrix(3, 3);
-	InitS21Matrix(matrix1, test1, 3, 3);
+	InitS21Matrix(matrix1, test_matrix1, 3, 3);
 
 	matrix1 = matrix1.CalcComplements();
 	ASSERT_EQ(EqMatrix(matrix1, test_result, 3, 3), true);
@@ -361,7 +388,7 @@ TEST(CALC_COMPLEMENTS, CORRECT_INPUT_ONE_ELEMENT_MATRIX) {
 	double **test_matrix1 = InitTestMatrix(test1, 1, 1);
 	double **test_result = InitTestMatrix(result, 1, 1);
 	S21Matrix matrix1 = S21Matrix(1, 1);
-	InitS21Matrix(matrix1, test1, 1, 1);
+	InitS21Matrix(matrix1, test_matrix1, 1, 1);
 
 	matrix1 = matrix1.CalcComplements();
 	ASSERT_EQ(EqMatrix(matrix1, test_result, 1, 1), true);
@@ -378,7 +405,7 @@ TEST(CALC_COMPLEMENTS, INCORRECT_INPUT_MATRIX_IS_NOT_SQUARE) {
 	
 	double **test_matrix1 = InitTestMatrix(test1, 2, 3);
 	S21Matrix matrix1 = S21Matrix(2, 3);
-	InitS21Matrix(matrix1, test1, 2, 3);
+	InitS21Matrix(matrix1, test_matrix1, 2, 3);
 
 	ASSERT_THROW(matrix1.CalcComplements(), std::out_of_range);
 
@@ -399,7 +426,7 @@ TEST(INVERSE_MATRIX, CORRECT_INPUT) {
 	double **test_matrix1 = InitTestMatrix(test1, 3, 3);
 	double **test_result = InitTestMatrix(result, 3, 3);
 	S21Matrix matrix1 = S21Matrix(3, 3);
-	InitS21Matrix(matrix1, test1, 3, 3);
+	InitS21Matrix(matrix1, test_matrix1, 3, 3);
 
 	matrix1 = matrix1.InverseMatrix();
 	ASSERT_EQ(EqMatrix(matrix1, test_result, 3, 3), true);
@@ -416,7 +443,7 @@ TEST(INVERSE_MATRIX, INCORRECT_INPUT_DETERMINANT_IS_EQUAL_TO_ZERO) {
 
 	double **test_matrix1 = InitTestMatrix(test1, 3, 3);
 	S21Matrix matrix1 = S21Matrix(3, 3);
-	InitS21Matrix(matrix1, test1, 3, 3);
+	InitS21Matrix(matrix1, test_matrix1, 3, 3);
 
 	ASSERT_THROW(matrix1.InverseMatrix(), std::invalid_argument);
 

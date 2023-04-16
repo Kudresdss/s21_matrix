@@ -10,19 +10,20 @@ bool EqMatrix(S21Matrix& matrix, double **test_matrix, int rows, int cols) {
 	return (true);
 }
 
-void InitS21Matrix(S21Matrix& matrix, double *test, int rows, int cols) {
-	for (int i = 0, k = 0; i < rows; ++i) {
-		for (int j = 0; j < cols; ++j, ++k)
-			matrix(i, j) = test[k];
+void InitS21Matrix(S21Matrix& matrix, double **test_matrix, int rows, int cols) {
+	for (int i = 0; i < rows; ++i) {
+		for (int j = 0; j < cols; ++j)
+			matrix(i, j) = test_matrix[i][j];
 	}
 }
 
 double **InitTestMatrix(double *test, int rows, int cols) {
 	double **test_matrix = new double*[rows]();
-	for (int i = 0, k = 0; i < cols; ++i) {
+	for (int i = 0, k = 0; i < rows; ++i) {
 		test_matrix[i] = new double[cols]();
-		for (int j = 0; j < cols; ++j, ++k)
+		for (int j = 0; j < cols; ++j, ++k) {
 			test_matrix[i][j] = test[k];
+		}
 	}
 	return (test_matrix);
 }
