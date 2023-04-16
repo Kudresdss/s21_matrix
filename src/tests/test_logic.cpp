@@ -27,8 +27,9 @@ double **InitTestMatrix(double *test, int rows, int cols) {
 	return (test_matrix);
 }
 
-void DeleteTestMatrix(double **test_matrix, int rows) {
+void DeleteTestMatrix(double *test, double **test_matrix, int rows) {
 	for (int i = 0; i < rows; ++i)
 		delete[] test_matrix[i];
 	delete[] test_matrix;
+	delete[] test;
 }

@@ -50,8 +50,8 @@ public:
 	double& operator()(int row, int col);				// index operator overload
 
 private:
-	int rows_, cols_;
-	double **matrix_;
+	int rows_ {}, cols_ {};
+	double **matrix_ {nullptr}; 
 
 };
 

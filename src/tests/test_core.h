@@ -7,6 +7,6 @@
 bool EqMatrix(S21Matrix& matrix, double **test_matrix, int rows, int cols);
 void InitS21Matrix(S21Matrix& matrix, double *test, int rows, int cols);
 double **InitTestMatrix(double *test, int rows, int cols);
-void DeleteTestMatrix(double **test_matrix, int rows);
+void DeleteTestMatrix(double *test, double **test_matrix, int rows);
 
 #endif  // SRC_S21_MATRIXPLUS_H_TESTS_TEST_CORE_H_

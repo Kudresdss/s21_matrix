@@ -41,7 +41,7 @@ void S21Matrix::MulNumber(const double num) {
 
 void S21Matrix::MulMatrix(const S21Matrix& other) {
 	if (cols_ != other.rows_)
-		throw std::out_of_range("Matrix dimensions are not compatible for multiplication"); // чекнуть, какой тип исключения впихнуть
+		throw std::out_of_range("Matrix dimensions are not compatible for multiplication");
 	
 	S21Matrix res(rows_, other.cols_);
 	for (int i = 0; i < rows_; ++i) {
@@ -80,7 +80,6 @@ S21Matrix S21Matrix::CalcComplements() {
 	return (res);
 }
 
-// оттестить нахуй
 void S21Matrix::CalcSubMatrix(int row, int col, const S21Matrix& minor) {
 	for (int min_x = 0, i = 0; i < minor.rows_; ++i) {
 		if (i == row) continue;
@@ -109,13 +108,11 @@ double S21Matrix::CalcDet() {
 		else if (rows_ == 2)
 			return (matrix_[0][0] * matrix_[1][1] - matrix_[1][0] * matrix_[0][1]);
 		else {
-			for (int i = 0; i < cols_; ++i) {
-				
-				S21Matrix minor(rows_ - 1, cols_ - 1);
-				for (int i = 0, sign = 1; i < rows_; ++i, sign *= -1) {
-					minor.CalcSubMatrix(i, 0, *this);
-					det += sign * matrix_[i][0] * minor.CalcDet();
-				}
+
+			S21Matrix minor(rows_ - 1, cols_ - 1);
+			for (int i = 0, sign = 1; i < rows_; ++i, sign *= -1) {
+				minor.CalcSubMatrix(i, 0, *this);
+				det += sign * matrix_[i][0] * minor.CalcDet();
 			}
 		}
 	return (det);
