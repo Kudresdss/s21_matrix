@@ -24,11 +24,11 @@ S21Matrix::S21Matrix(S21Matrix&& other) {
 }
 
 S21Matrix::~S21Matrix() {
-    if (matrix_) {
+    if (matrix_ != nullptr) {
 		for (int i = 0; i < rows_; ++i) {
-			delete matrix_[i];
+			delete[] matrix_[i];
 		}
-        delete[] matrix_;
+        delete[] matrix_; //??
     }
 	rows_ = 0;
 	cols_ = 0;
