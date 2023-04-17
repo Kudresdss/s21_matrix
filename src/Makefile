@@ -1,7 +1,7 @@
 CC						= g++
-CFLAGS					= -Wall -Werror -Wextra -std=c++17 -pedantic -g
+CFLAGS					= -Wall -Werror -Wextra -std=c++17 -pedantic
 LDFLAGS					= $(shell pkg-config --cflags --libs gtest)
-GCOV_FLAGS				= -fprofile-arcs -ftest-coverage -fPIC
+GCOV_FLAGS				= -fprofile-arcs-ftest-coverage -fPIC
 VALGRIND_FLAGS			= --log-file="valgrind.txt" --track-origins=yes --trace-children=yes --leak-check=full --leak-resolution=med
 
 SRC_PROJECT_DIR			= logic/
@@ -51,7 +51,7 @@ clean:
 
 rebuild: clean test
 
-open: 
+open_report: 
 	open report/index.html
 
 valgrind: test
@@ -62,4 +62,4 @@ clang:
 	clang-format --style=google -i $(SRC_PROJECT_DIR)*
 	clang-format --style=google -i $(SRC_TEST_DIR)*
 
-.PHONY: all clean rebuild open clang valgrind docker
+.PHONY: all clean rebuild open_report clang valgrind docker
