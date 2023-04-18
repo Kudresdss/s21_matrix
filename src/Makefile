@@ -1,8 +1,8 @@
 CC						= g++
-CFLAGS					= -Wall -Werror -Wextra -std=c++17 -pedantic
+CFLAGS					= -Wall -Werror -Wextra -std=c++17 -pedantic -g -fsanitize=address
 LDFLAGS					= $(shell pkg-config --cflags --libs gtest)
 GCOV_FLAGS				= -fprofile-arcs-ftest-coverage -fPIC
-VALGRIND_FLAGS			= --log-file="valgrind.txt" --track-origins=yes --trace-children=yes --leak-check=full --leak-resolution=med
+VALGRIND_FLAGS			= #-s #--log-file="valgrind.txt" --track-origins=yes --trace-children=yes --leak-check=full --leak-resolution=med
 
 SRC_PROJECT_DIR			= logic/
 SRC_TEST_DIR			= tests/
@@ -29,7 +29,7 @@ test: $(LIBRARY) $(OBJ_TEST)
 gcov_report: $(OBJ_TEST)
 	$(CC) $(CFLAGS) -o test $(OBJ_TEST) --coverage $(SRC_PROJECT) $(LDFLAGS)
 	./test
-	lcov -t "test" -o gcov.info -c -d .
+	lcov -t "test" -o gcov.info --no-external -c -d .
 	genhtml -o report gcov.info
 	rm -rf ./*.gc*
 
