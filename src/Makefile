@@ -1,5 +1,5 @@
 CC						= g++
-CFLAGS					= -Wall -Werror -Wextra -std=c++17 -pedantic -g -fsanitize=address
+CFLAGS					= -Wall -Werror -Wextra -std=c++17 -pedantic -g #-fsanitize=address
 LDFLAGS					= $(shell pkg-config --cflags --libs gtest)
 GCOV_FLAGS				= -fprofile-arcs-ftest-coverage -fPIC
 VALGRIND_FLAGS			= #-s #--log-file="valgrind.txt" --track-origins=yes --trace-children=yes --leak-check=full --leak-resolution=med

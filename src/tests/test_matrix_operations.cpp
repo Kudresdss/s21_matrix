@@ -29,6 +29,7 @@ TEST(EQ_MATRIX, TRUE_ARE_EQUAL_ACCURACY8) {
   ASSERT_EQ(matrix1.EqMatrix(matrix2), true);
 
   DeleteTestMatrix(test1, test_matrix1, 2);
+  DeleteTestMatrix(test2, test_matrix2, 2);
 }
 
 TEST(EQ_MATRIX, FALSE_ARE_NOT_EQUAL_ACCURACY7) {
