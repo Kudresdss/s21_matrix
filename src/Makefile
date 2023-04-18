@@ -1,8 +1,7 @@
 CC						= g++
-CFLAGS					= -Wall -Werror -Wextra -std=c++17 -pedantic -g #-fsanitize=address
+CFLAGS					= -Wall -Werror -Wextra -std=c++17 -pedantic -g
 LDFLAGS					= $(shell pkg-config --cflags --libs gtest)
 GCOV_FLAGS				= -fprofile-arcs-ftest-coverage -fPIC
-VALGRIND_FLAGS			= #-s #--log-file="valgrind.txt" --track-origins=yes --trace-children=yes --leak-check=full --leak-resolution=med
 
 SRC_PROJECT_DIR			= logic/
 SRC_TEST_DIR			= tests/
@@ -54,12 +53,12 @@ rebuild: clean test
 open_report: 
 	open report/index.html
 
-valgrind: test
-	valgrind $(VALGRIND_FLAGS) ./test
-	! grep -n "ERROR SUMMARY" valgrind.txt | grep -v "0 errors"
-
-clang:
+google_style:
 	clang-format --style=google -i $(SRC_PROJECT_DIR)*
 	clang-format --style=google -i $(SRC_TEST_DIR)*
 
-.PHONY: all clean rebuild open_report clang valgrind docker
+google_style_check:
+	clang-format --style=google -n $(SRC_PROJECT_DIR)*
+	clang-format --style=google -n $(SRC_TEST_DIR)*
+
+.PHONY: all clean rebuild gcov_report open_report google_style google_style_check
