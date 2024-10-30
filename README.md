@@ -6,22 +6,22 @@ Currently works only on macOS and linux systems.
 Implementation of standard matrix functions in C++. Tests require GTest library, also there's option for coverage tests with Gcov.
 
 Compilation: \
-```make``` \
+```make```
 
 General tests: \
-```make test``` \
+```make test```
 
 Coverage tests: \
-```make gcov_report``` \
+```make gcov_report```
 
 Coverage report: \
-```make open_report``` \
+```make open_report```
 
 Clean object files: \
-```make clean``` \
+```make clean```
 
 Full clean object and library files: \
-```make fclean``` \
+```make fclean```
 
 Recompilation: \
-```make rebuild``` \
+```make rebuild```
