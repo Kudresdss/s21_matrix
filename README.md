@@ -9,7 +9,7 @@ Compilation:
 - run "make"
 
 General tests:
--run "test"
+- run "test"
 
 Coverage tests:
 - run "gcov_report"
